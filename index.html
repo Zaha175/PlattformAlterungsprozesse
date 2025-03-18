@@ -1,0 +1,2222 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plattform für Alterungsprozesse</title>
+    <style>
+        /* Reset und Basis-Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: #003366;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: #F6D55C;
+        }
+
+        /* Navigation */
+        .main-nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dark-mode-toggle:hover {
+            background-color: #666;
+        }
+
+        /* Suche */
+        .search-container {
+            margin: 20px 0;
+            display: flex;
+        }
+
+        .search-input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            border-right: none;
+        }
+
+        .search-button {
+            background-color: #003366;
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        body.dark-mode .search-input {
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+            border-color: #444;
+        }
+
+        body.dark-mode .search-button {
+            background-color: #5D5CDE;
+        }
+
+        /* Hauptinhalt */
+        .main-content {
+            display: flex;
+            margin: 20px 0;
+            gap: 20px;
+        }
+
+        /* Seitenleiste */
+        .sidebar {
+            width: 25%;
+            min-width: 250px;
+        }
+
+        /* Buttons für Alterungsprozesse */
+        .menu-heading {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 20px 0 10px;
+            color: #003366;
+        }
+
+        body.dark-mode .menu-heading {
+            color: #5D5CDE;
+        }
+
+        .menu-button {
+            display: block;
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background-color: white;
+            color: #333;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: left;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .menu-button:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .menu-button.active {
+            background-color: #003366;
+            color: white;
+            border-color: #003366;
+        }
+
+        .menu-button i {
+            margin-right: 8px;
+            width: 20px;
+            text-align: center;
+        }
+
+        body.dark-mode .menu-button {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            border-color: #333;
+        }
+
+        body.dark-mode .menu-button:hover {
+            background-color: #2a2a2a;
+        }
+
+        body.dark-mode .menu-button.active {
+            background-color: #5D5CDE;
+            border-color: #5D5CDE;
+        }
+
+        /* Inhalt */
+        .content {
+            flex-grow: 1;
+        }
+
+        .description {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s;
+        }
+
+        body.dark-mode .description {
+            background-color: #1e1e1e;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .description.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .description-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .description-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: #003366;
+            font-size: 1.5rem;
+        }
+
+        body.dark-mode .description-icon {
+            background-color: #2a2a2a;
+            color: #5D5CDE;
+        }
+
+        .description h2 {
+            margin-bottom: 10px;
+            color: #003366;
+        }
+
+        body.dark-mode .description h2 {
+            color: #5D5CDE;
+        }
+
+        .description p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        body.dark-mode .description p {
+            color: #aaa;
+        }
+
+        /* Karten */
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .card {
+            flex: 1 1 30%;
+            min-width: 250px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        body.dark-mode .card {
+            background-color: #1e1e1e;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: #003366;
+        }
+
+        body.dark-mode .card-icon {
+            background-color: #2a2a2a;
+            color: #5D5CDE;
+        }
+
+        .card h3 {
+            margin: 0;
+            color: #003366;
+        }
+
+        body.dark-mode .card h3 {
+            color: #5D5CDE;
+        }
+
+        .card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        body.dark-mode .card p {
+            color: #aaa;
+        }
+
+        /* Tipps-Box */
+        .tip-box {
+            background-color: #fff9e6;
+            border-left: 4px solid #F6D55C;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        body.dark-mode .tip-box {
+            background-color: #2a2a2a;
+            border-left-color: #F6D55C;
+        }
+
+        .tip-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #b38c00;
+        }
+
+        body.dark-mode .tip-header {
+            color: #F6D55C;
+        }
+
+        .tip-header i {
+            margin-right: 10px;
+        }
+
+        /* Listen */
+        ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        ul li {
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        body.dark-mode ul li {
+            color: #bbb;
+        }
+
+        /* Intervallfasten spezifisches Styling */
+        .progress-bar-container {
+            position: relative;
+            height: 2rem;
+            background-color: #f0f0f0;
+            border-radius: 1rem;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        body.dark-mode .progress-bar-container {
+            background-color: #2a2a2a;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            font-weight: bold;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 67%;
+            background-color: rgba(93, 92, 222, 0.3);
+            transition: width 0.3s ease;
+        }
+
+        body.dark-mode .progress-fill {
+            background-color: rgba(93, 92, 222, 0.4);
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .legend-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+        }
+
+        .fasting-bg {
+            background-color: #e5f6ff;
+        }
+
+        .lunch-bg {
+            background-color: #fff2cc;
+        }
+
+        .snack-bg {
+            background-color: #e6ffe6;
+        }
+
+        .dinner-bg {
+            background-color: #e5ccff;
+        }
+
+        body.dark-mode .fasting-bg {
+            background-color: #1e3a4a;
+        }
+
+        body.dark-mode .lunch-bg {
+            background-color: #3d381c;
+        }
+
+        body.dark-mode .snack-bg {
+            background-color: #1c3d1c;
+        }
+
+        body.dark-mode .dinner-bg {
+            background-color: #2e1c3d;
+        }
+
+        .meal-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .meal-card:hover {
+            transform: translateY(-5px);
+        }
+
+        body.dark-mode .meal-card {
+            border-color: #333;
+        }
+
+        .meal-day {
+            padding: 10px 15px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .today-badge {
+            background-color: #5D5CDE;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .meal-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+        }
+
+        @media (min-width: 768px) {
+            .meal-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        .meal-item {
+            padding: 15px;
+            border-top: 1px solid #ddd;
+        }
+
+        body.dark-mode .meal-item {
+            border-color: #333;
+        }
+
+        .meal-time {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .meal-icon {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+        }
+
+        .meal-label {
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .meal-description {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        body.dark-mode .meal-description {
+            color: #aaa;
+        }
+
+        .meal-breakfast {
+            background-color: rgba(229, 246, 255, 0.3);
+        }
+
+        .meal-lunch {
+            background-color: rgba(255, 242, 204, 0.3);
+        }
+
+        .meal-snack {
+            background-color: rgba(230, 255, 230, 0.3);
+        }
+
+        .meal-dinner {
+            background-color: rgba(229, 204, 255, 0.3);
+        }
+
+        .meal-fasting {
+            background-color: rgba(229, 246, 255, 0.3);
+        }
+
+        body.dark-mode .meal-breakfast {
+            background-color: rgba(30, 58, 74, 0.3);
+        }
+
+        body.dark-mode .meal-lunch {
+            background-color: rgba(61, 56, 28, 0.3);
+        }
+
+        body.dark-mode .meal-snack {
+            background-color: rgba(28, 61, 28, 0.3);
+        }
+
+        body.dark-mode .meal-dinner {
+            background-color: rgba(46, 28, 61, 0.3);
+        }
+
+        body.dark-mode .meal-fasting {
+            background-color: rgba(30, 58, 74, 0.3);
+        }
+
+        .show-more-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 15px;
+            background-color: #5D5CDE;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .show-more-button:hover {
+            background-color: #4a49b6;
+        }
+
+        /* Tipps-Karten */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        @media (min-width: 768px) {
+            .tips-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .tip-card {
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .hydration-card {
+            background-color: #e5f6ff;
+        }
+
+        .sport-card {
+            background-color: #e6ffe6;
+        }
+
+        .nutrition-card {
+            background-color: #fff2cc;
+        }
+
+        body.dark-mode .hydration-card {
+            background-color: #1e3a4a;
+        }
+
+        body.dark-mode .sport-card {
+            background-color: #1c3d1c;
+        }
+
+        body.dark-mode .nutrition-card {
+            background-color: #3d381c;
+        }
+
+        .tip-card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .tip-card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            background-color: white;
+        }
+
+        body.dark-mode .tip-card-icon {
+            background-color: #2a2a2a;
+        }
+
+        /* Day Card Styling */
+        .day-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        body.dark-mode .day-card {
+            background-color: #1e1e1e;
+        }
+
+        .day-header {
+            background-color: #f0f0f0;
+            padding: 15px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        body.dark-mode .day-header {
+            background-color: #2a2a2a;
+        }
+
+        .day-content {
+            padding: 15px;
+        }
+
+        .meal-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .meal-list li {
+            margin-bottom: 10px;
+            padding-left: 22px;
+            position: relative;
+        }
+
+        .meal-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #5D5CDE;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #003366;
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+
+        body.dark-mode footer {
+            background-color: #1a1a1a;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .footer-info h2 {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .footer-info p {
+            color: #ccc;
+            max-width: 400px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #F6D55C;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main-content {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                min-width: 100%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-dna"></i>
+                <span>Plattform für Alterungsprozesse</span>
+            </div>
+            <div class="main-nav">
+                <button id="darkModeToggle" class="dark-mode-toggle">
+                    <i class="fas fa-moon"></i> Dark Mode
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Suchfeld -->
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Suche nach Alterungsprozessen, Gegenmaßnahmen...">
+            <button class="search-button">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+
+        <!-- Hauptinhalt -->
+        <div class="main-content">
+            <!-- Seitenleiste mit Menü -->
+            <div class="sidebar">
+                <h2 class="menu-heading">Alterungsprozesse</h2>
+                <button class="menu-button" onclick="showDescription('genomische-instabilitaet')">
+                    <i class="fas fa-dna" style="color: #5D5CDE;"></i> Genomische Instabilität
+                </button>
+                <button class="menu-button" onclick="showDescription('telomerverkuerzung')">
+                    <i class="fas fa-ruler" style="color: #3CAEA3;"></i> Telomerverkürzung
+                </button>
+                <button class="menu-button" onclick="showDescription('epigenetische-veraenderungen')">
+                    <i class="fas fa-code-branch" style="color: #ED553B;"></i> Epigenetische Veränderungen
+                </button>
+                <button class="menu-button" onclick="showDescription('verlust-proteostase')">
+                    <i class="fas fa-cubes" style="color: #F6D55C;"></i> Verlust der Proteostase
+                </button>
+                <button class="menu-button" onclick="showDescription('deregulierung-naehrstoffsensorik')">
+                    <i class="fas fa-utensils" style="color: #5D5CDE;"></i> Deregulierung der Nährstoffsensorik
+                </button>
+                <button class="menu-button" onclick="showDescription('mitochondriale-dysfunktion')">
+                    <i class="fas fa-bolt" style="color: #ED553B;"></i> Mitochondriale Dysfunktion
+                </button>
+                <button class="menu-button" onclick="showDescription('zellulaere-seneszenz')">
+                    <i class="fas fa-hourglass-half" style="color: #3CAEA3;"></i> Zelluläre Seneszenz
+                </button>
+                <button class="menu-button" onclick="showDescription('erschoepfung-stammzellen')">
+                    <i class="fas fa-star" style="color: #F6D55C;"></i> Erschöpfung der Stammzellen
+                </button>
+                <button class="menu-button" onclick="showDescription('veraenderte-kommunikation')">
+                    <i class="fas fa-comments" style="color: #5D5CDE;"></i> Veränderte interzelluläre Kommunikation
+                </button>
+                <button class="menu-button" onclick="showDescription('chronische-entzuendung')">
+                    <i class="fas fa-fire" style="color: #ED553B;"></i> Chronische Entzündung
+                </button>
+
+                <h2 class="menu-heading">Ernährungspläne</h2>
+                <button class="menu-button" onclick="showDescription('ernaehrungsplan')">
+                    <i class="fas fa-seedling" style="color: #3CAEA3;"></i> 7-Tage Plan für jüngere Darmflora
+                </button>
+                <button class="menu-button" onclick="showDescription('intervallfasten')">
+                    <i class="fas fa-clock" style="color: #5D5CDE;"></i> 16:8 Intervallfasten-Plan
+                </button>
+            </div>
+
+            <!-- Inhaltsbereich -->
+            <div class="content">
+                <!-- Willkommens-Beschreibung -->
+                <div id="header-description" class="description active">
+                    <div class="description-header">
+                        <div class="description-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <h2>Willkommen bei der Plattform für Alterungsprozesse</h2>
+                    </div>
+                    <p>
+                        Diese Plattform bietet Ihnen umfassende Informationen zu den wichtigsten Alterungsprozessen und wissenschaftlich fundierten Gegenmaßnahmen. Wählen Sie einen der Themenbereiche aus dem Menü, um mehr zu erfahren.
+                    </p>
+
+                    <div class="cards-container">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-microscope"></i>
+                                </div>
+                                <h3>Wissenschaftliche Grundlagen</h3>
+                            </div>
+                            <p>Erfahren Sie mehr über die biologischen Mechanismen des Alterns.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-heartbeat"></i>
+                                </div>
+                                <h3>Praktische Maßnahmen</h3>
+                            </div>
+                            <p>Entdecken Sie wirksame Strategien zur Verlangsamung des Alterungsprozesses.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-apple-alt"></i>
+                                </div>
+                                <h3>Ernährungspläne</h3>
+                            </div>
+                            <p>Optimieren Sie Ihre Ernährung für ein gesünderes und längeres Leben.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Genomische Instabilität -->
+                <div id="genomische-instabilitaet-description" class="description">
+                    <div class="description-header">
+                        <div class="description-icon">
+                            <i class="fas fa-dna"></i>
+                        </div>
+                        <h2>Genomische Instabilität</h2>
+                    </div>
+                    <p>
+                        Die DNA in unseren Zellen wird kontinuierlich durch externe und interne Faktoren beschädigt. Mit zunehmendem Alter nehmen diese Schäden zu und die Fähigkeit zur DNA-Reparatur nimmt ab, was zu genomischer Instabilität führt.
+                    </p>
+
+                    <div class="cards-container">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e6ffe6; color: green;">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <h3>Gesunde Ernährung</h3>
+                            </div>
+                            <p>Antioxidantienreiche Ernährung zum Schutz vor oxidativem Stress, der DNA-Schäden verursacht.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e5f6ff; color: #0066cc;">
+                                    <i class="fas fa-running"></i>
+                                </div>
+                                <h3>Regelmäßige Bewegung</h3>
+                            </div>
+                            <p>Moderate körperliche Aktivität fördert die DNA-Reparaturmechanismen und verbessert die Zellgesundheit.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e5ccff; color: #6600cc;">
+                                    <i class="fas fa-pills"></i>
+                                </div>
+                                <h3>Medikamente</h3>
+                            </div>
+                            <p>Einige Medikamente wie Metformin können potenziell die DNA-Reparatur unterstützen und genomische Stabilität fördern.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Wussten Sie?</h3>
+                        </div>
+                        <p>
+                            DNA-Schäden treten täglich etwa 10.000 bis 100.000 Mal in jeder Zelle unseres Körpers auf. Mit zunehmendem Alter nimmt die Effizienz unserer DNA-Reparaturmechanismen ab, was zur Anhäufung von Mutationen führt.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Telomerverkürzung -->
+                <div id="telomerverkuerzung-description" class="description">
+                    <div class="description-header">
+                        <div class="description-icon">
+                            <i class="fas fa-ruler"></i>
+                        </div>
+                        <h2>Telomerverkürzung</h2>
+                    </div>
+                    <p>
+                        Telomere sind die Schutzkappen an den Chromosomenenden, die bei jeder Zellteilung kürzer werden. Wenn sie zu kurz werden, kann sich die Zelle nicht mehr teilen, was zu zellulärer Seneszenz oder Apoptose führt.
+                    </p>
+
+                    <div class="cards-container">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e6ffe6; color: green;">
+                                    <i class="fas fa-seedling"></i>
+                                </div>
+                                <h3>Telomerase-Aktivierung</h3>
+                            </div>
+                            <p>Natürliche Verbindungen wie z.B. TA-65 aus Astragalus können die Telomerase aktivieren, ein Enzym, das Telomere verlängert.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #fff9e6; color: #cc9900;">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <h3>Gesunder Lebensstil</h3>
+                            </div>
+                            <p>Stressreduktion, gesunde Ernährung und ausreichend Schlaf können die Telomerverkürzung verlangsamen.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Wussten Sie?</h3>
+                        </div>
+                        <p>
+                            Studien haben gezeigt, dass Menschen mit längeren Telomeren statistisch gesehen ein geringeres Risiko für altersbedingte Erkrankungen haben. Chronischer Stress kann die Telomerverkürzung beschleunigen.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Epigenetische Veränderungen -->
+                <div id="epigenetische-veraenderungen-description" class="description">
+                    <div class="description-header">
+                        <div class="description-icon">
+                            <i class="fas fa-code-branch"></i>
+                        </div>
+                        <h2>Epigenetische Veränderungen</h2>
+                    </div>
+                    <p>
+                        Epigenetische Veränderungen sind Modifikationen an der DNA und assoziierten Proteinen, die die Genexpression beeinflussen, ohne die DNA-Sequenz selbst zu verändern. Mit zunehmendem Alter kommt es zu Veränderungen im epigenetischen Muster.
+                    </p>
+
+                    <div class="cards-container">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e5ccff; color: #6600cc;">
+                                    <i class="fas fa-pills"></i>
+                                </div>
+                                <h3>Epigenetische Medikamente</h3>
+                            </div>
+                            <p>Substanzen wie Spermidin können die Autophagie fördern und epigenetische Veränderungen positiv beeinflussen.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e5f6ff; color: #0066cc;">
+                                    <i class="fas fa-utensils"></i>
+                                </div>
+                                <h3>Kalorienrestriktion</h3>
+                            </div>
+                            <p>Eine reduzierte Kalorienzufuhr ohne Mangelernährung kann das epigenetische Profil verjüngen und die Lebensspanne verlängern.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Wussten Sie?</h3>
+                        </div>
+                        <p>
+                            Das epigenetische Muster kann als biologischer Altersmarker dienen. Der "epigenetische Uhr"-Test kann das biologische Alter anhand von DNA-Methylierungsmustern bestimmen, welches vom chronologischen Alter abweichen kann.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Verlust der Proteostase -->
+                <div id="verlust-proteostase-description" class="description">
+                    <div class="description-header">
+                        <div class="description-icon">
+                            <i class="fas fa-cubes"></i>
+                        </div>
+                        <h2>Verlust der Proteostase</h2>
+                    </div>
+                    <p>
+                        Proteostase bezieht sich auf das Gleichgewicht zwischen Proteinsynthese, -faltung und -abbau. Mit zunehmendem Alter nimmt die Effizienz der Proteostase ab, was zur Ansammlung fehlgefalteter Proteine führt und mit Krankheiten wie Alzheimer und Parkinson in Verbindung gebracht wird.
+                    </p>
+
+                    <div class="cards-container">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e6ffe6; color: green;">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <h3>Chaperone</h3>
+                            </div>
+                            <p>Proteine, die die korrekte Faltung anderer Proteine unterstützen und vor Aggregation schützen.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #fff9e6; color: #cc9900;">
+                                    <i class="fas fa-recycle"></i>
+                                </div>
+                                <h3>Proteasom-Aktivierung</h3>
+                            </div>
+                            <p>Förderung des Proteinabbaus durch Aktivierung des Proteasoms, des zellulären Proteinabbau-Systems.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e5f6ff; color: #0066cc;">
+                                    <i class="fas fa-broom"></i>
+                                </div>
+                                <h3>Autophagie-Aktivierung</h3>
+                            </div>
+                            <p>Förderung der Autophagie, des zellulären "Selbstreinigungsprozesses", durch Kalorienrestriktion oder Medikamente wie Rapamycin.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Wussten Sie?</h3>
+                        </div>
+                        <p>
+                            Das Fasten für 16-18 Stunden kann die Autophagie aktivieren, einen Prozess, bei dem die Zelle beschädigte Proteine und Organellen abbaut und recycelt. Dies trägt zur Verbesserung der Proteostase bei.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Deregulierung der Nährstoffsensorik -->
+                <div id="deregulierung-naehrstoffsensorik-description" class="description">
+                    <div class="description-header">
+                        <div class="description-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h2>Deregulierung der Nährstoffsensorik</h2>
+                    </div>
+                    <p>
+                        Nährstoffsensorik-Signalwege (wie Insulin/IGF-1, mTOR, AMPK) ermöglichen es Zellen, auf Nährstoffverfügbarkeit zu reagieren. Mit dem Alter wird diese Signalübertragung gestört, was zu metabolischen Störungen führen kann.
+                    </p>
+
+                    <div class="cards-container">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e5f6ff; color: #0066cc;">
+                                    <i class="fas fa-balance-scale"></i>
+                                </div>
+                                <h3>Kalorienrestriktion</h3>
+                            </div>
+                            <p>Reduzierte Kalorienzufuhr ohne Mangelernährung kann die Insulin- und mTOR-Signalwege normalisieren.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #fff9e6; color: #cc9900;">
+                                    <i class="fas fa-hourglass-half"></i>
+                                </div>
+                                <h3>Intermittierendes Fasten</h3>
+                            </div>
+                            <p>Regelmäßige Essenspausen wie beim 16:8-Intervallfasten können die AMPK-Aktivität steigern und die Insulinsensitivität verbessern.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e5ccff; color: #6600cc;">
+                                    <i class="fas fa-pills"></i>
+                                </div>
+                                <h3>Medikamente</h3>
+                            </div>
+                            <p>Metformin kann den AMPK-Signalweg aktivieren und die Insulinsensitivität verbessern, was zu einer verbesserten Nährstoffsensorik führt.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Wussten Sie?</h3>
+                        </div>
+                        <p>
+                            Die Deregulierung der Nährstoffsensorik ist eng mit Übergewicht und Typ-2-Diabetes verbunden. Die Verbesserung dieser Signalwege durch Lebensstiländerungen kann nicht nur das Alterungstempo verlangsamen, sondern auch das Risiko für diese Erkrankungen reduzieren.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Mitochondriale Dysfunktion -->
+                <div id="mitochondriale-dysfunktion-description" class="description">
+                    <div class="description-header">
+                        <div class="description-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h2>Mitochondriale Dysfunktion</h2>
+                    </div>
+                    <p>
+                        Mitochondrien sind die "Kraftwerke" der Zellen und produzieren ATP, die Energiewährung des Körpers. Mit zunehmendem Alter nimmt ihre Funktion ab, und sie produzieren mehr reaktive Sauerstoffspezies (ROS), die zu oxidativem Stress führen.
+                    </p>
+
+                    <div class="cards-container">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e6ffe6; color: green;">
+                                    <i class="fas fa-running"></i>
+                                </div>
+                                <h3>Bewegung</h3>
+                            </div>
+                            <p>Regelmäßige körperliche Aktivität fördert die mitochondriale Biogenese und verbessert die mitochondriale Funktion.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #fff9e6; color: #cc9900;">
+                                    <i class="fas fa-carrot"></i>
+                                </div>
+                                <h3>Antioxidantien</h3>
+                            </div>
+                            <p>Antioxidantien wie Coenzym Q10, Alpha-Liponsäure und PQQ können die mitochondriale Funktion unterstützen und vor oxidativem Stress schützen.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e5ccff; color: #6600cc;">
+                                    <i class="fas fa-pills"></i>
+                                </div>
+                                <h3>Medikamente</h3>
+                            </div>
+                            <p>Metformin kann die mitochondriale Effizienz verbessern und Nicotinamid-Ribosid kann die NAD+-Spiegel erhöhen, die für die mitochondriale Funktion wichtig sind.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Wussten Sie?</h3>
+                        </div>
+                        <p>
+                            Mitochondrien haben ihre eigene DNA (mtDNA), die anfälliger für Schäden ist als die DNA im Zellkern. Schäden an der mtDNA können zu einer Verschlechterung der mitochondrialen Funktion und damit zu einer beschleunigten Alterung führen.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Zelluläre Seneszenz -->
+                <div id="zellulaere-seneszenz-description" class="description">
+                    <div class="description-header">
+                        <div class="description-icon">
+                            <i class="fas fa-hourglass-half"></i>
+                        </div>
+                        <h2>Zelluläre Seneszenz</h2>
+                    </div>
+                    <p>
+                        Seneszente Zellen teilen sich nicht mehr, bleiben aber metabolisch aktiv und setzen entzündungsfördernde Faktoren frei (SASP - Seneszenz-assoziierter sekretorischer Phänotyp). Die Ansammlung dieser Zellen im Alter trägt zu Entzündungen und Organfunktionsstörungen bei.
+                    </p>
+
+                    <div class="cards-container">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e5ccff; color: #6600cc;">
+                                    <i class="fas fa-syringe"></i>
+                                </div>
+                                <h3>Senolytika</h3>
+                            </div>
+                            <p>Medikamente wie Dasatinib und Quercetin können selektiv seneszente Zellen abtöten und so die Organfunktion verbessern.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e5f6ff; color: #0066cc;">
+                                    <i class="fas fa-dna"></i>
+                                </div>
+                                <h3>Gentherapie</h3>
+                            </div>
+                            <p>Experimentelle Ansätze wie die Reprogrammierung von T-Zellen, um seneszente Zellen zu eliminieren, befinden sich in der Entwicklung.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Wussten Sie?</h3>
+                        </div>
+                        <p>
+                            Studien an Mäusen haben gezeigt, dass die Entfernung von nur 30% der seneszenten Zellen zu einer deutlichen Verlängerung der gesunden Lebensspanne führen kann. Derzeit laufen klinische Studien, um die Wirksamkeit von Senolytika beim Menschen zu testen.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Erschöpfung der Stammzellen -->
+                <div id="erschoepfung-stammzellen-description" class="description">
+                    <div class="description-header">
+                        <div class="description-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h2>Erschöpfung der Stammzellen</h2>
+                    </div>
+                    <p>
+                        Mit zunehmendem Alter nimmt die Anzahl und Funktionalität von Stammzellen ab, was zu einer verminderten Regenerationsfähigkeit der Gewebe führt. Dies trägt zu einer verzögerten Wundheilung und einer verminderten Organfunktion bei.
+                    </p>
+
+                    <div class="cards-container">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e5ccff; color: #6600cc;">
+                                    <i class="fas fa-syringe"></i>
+                                </div>
+                                <h3>Stammzelltherapie</h3>
+                            </div>
+                            <p>Transplantation von Stammzellen, um geschädigte Gewebe und Organe zu regenerieren und ihre Funktion zu verbessern.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e6ffe6; color: green;">
+                                    <i class="fas fa-seedling"></i>
+                                </div>
+                                <h3>Wachstumsfaktoren</h3>
+                            </div>
+                            <p>Natürliche oder synthetische Proteine, die die Stammzellaktivität stimulieren und die Geweberegeneration fördern können.</p>
+                        </div>
+                    </div>
+
+                    <div style="background-color: #f0f0f0; border-radius: 8px; padding: 20px; margin: 20px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                        <h3 style="margin-bottom: 15px; font-size: 1.3rem; color: #003366;">TAGESPLAN zur Unterstützung der Stammzellaktivität</h3>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="font-weight: bold; color: #5D5CDE; margin-bottom: 5px;">Morgens</h4>
+                            <p style="margin-bottom: 8px;"><strong>Aufwachen & Bewegung:</strong> Beginne den Tag mit einer moderaten körperlichen Aktivität wie einem zügigen Spaziergang oder einer kurzen Yoga-Session zur Aktivierung des Stoffwechsels und der Autophagie.</p>
+                            <p><strong>Gesundes Frühstück:</strong> Ausgewogen mit viel Obst, Gemüse und Omega-3-Fettsäuren. Vermeide eine übermäßig proteinreiche Ernährung.</p>
+                        </div>
+                            
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="font-weight: bold; color: #5D5CDE; margin-bottom: 5px;">Vormittag</h4>
+                            <p><strong>Geistige Aktivität:</strong> Lesen, Lernen oder kreative Hobbys zur Förderung der kognitiven Gesundheit. Ein höheres Bildungsniveau kann mit langsamerem Altern verbunden sein.</p>
+                        </div>
+                            
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="font-weight: bold; color: #5D5CDE; margin-bottom: 5px;">Mittag</h4>
+                            <p><strong>Kalorienbewusstes Mittagessen:</strong> Kalorienreduzierte Ernährung ohne Hungern. Kalorienrestriktion kann zu kleineren Nukleoli führen, die das Altern verlangsamen.</p>
+                        </div>
+                            
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="font-weight: bold; color: #5D5CDE; margin-bottom: 5px;">Nachmittag</h4>
+                            <p><strong>Bewegung & Entspannung:</strong> Integriere Bewegung in deinen Alltag und nimm dir Zeit zum Entspannen. Chronischer Stress kann den Alterungsprozess beschleunigen.</p>
+                        </div>
+                            
+                        <div>
+                            <h4 style="font-weight: bold; color: #5D5CDE; margin-bottom: 5px;">Abend</h4>
+                            <p style="margin-bottom: 8px;"><strong>Leichtes Abendessen:</strong> Viel Gemüse und gesunde Fette, späte Mahlzeiten vermeiden, um die Autophagie zu unterstützen.</p>
+                            <p><strong>Vorbereitung auf den Schlaf:</strong> Entspannende Abendroutine für erholsamen Schlaf, wichtig für die Zellregeneration.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Wussten Sie?</h3>
+                        </div>
+                        <p>
+                            Stammzellen in verschiedenen Geweben haben unterschiedliche Alterungsraten. Besonders schnell altern hämatopoetische Stammzellen (Blutbildung) und Stammzellen der Haut, während neurale Stammzellen relativ langsam altern.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Veränderte interzelluläre Kommunikation -->
+                <div id="veraenderte-kommunikation-description" class="description">
+                    <div class="description-header">
+                        <div class="description-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h2>Veränderte interzelluläre Kommunikation</h2>
+                    </div>
+                    <p>
+                        Mit dem Alter verändert sich die Kommunikation zwischen Zellen, was zu Fehlfunktionen in verschiedenen Geweben und Organen führen kann. Entzündungssignale nehmen zu, während regenerative Signale abnehmen.
+                    </p>
+
+                    <div class="cards-container">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e5ccff; color: #6600cc;">
+                                    <i class="fas fa-vial"></i>
+                                </div>
+                                <h3>Hormone</h3>
+                            </div>
+                            <p>Hormonersatztherapie kann altersbedingte hormonelle Ungleichgewichte ausgleichen und die Zellkommunikation verbessern.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e5f6ff; color: #0066cc;">
+                                    <i class="fas fa-band-aid"></i>
+                                </div>
+                                <h3>Entzündungshemmende Maßnahmen</h3>
+                            </div>
+                            <p>Reduktion von chronischen Entzündungen durch Lebensstiländerungen oder Medikamente kann die interzelluläre Kommunikation verbessern.</p>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 30px; margin-bottom: 15px; font-size: 1.5rem; color: #003366;">Sirtuine</h3>
+                    <p>
+                        Sirtuine sind eine Familie von Proteinen, die als NAD+-abhängige Enzyme fungieren und eine Schlüsselrolle bei der Regulation zahlreicher zellulärer Prozesse spielen, einschließlich des Alterns, der zellulären Reparatur und des Stoffwechsels.
+                    </p>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px; font-size: 1.2rem; color: #003366;">Wirkungen von Sirtuinen</h4>
+                    <ol style="list-style-type: decimal; padding-left: 25px;">
+                        <li><strong>Förderung der mitochondrialen Gesundheit</strong>
+                            <p>Sirtuine, insbesondere SIRT3, SIRT4, und SIRT5, regulieren die Funktion von Mitochondrien und unterstützen die Energieproduktion.</p>
+                        </li>
+                        <li><strong>DNA-Reparatur und Genomstabilität</strong>
+                            <p>Sirtuine wie SIRT6 fördern die Reparatur von DNA-Schäden und tragen zur Erhaltung der Genomstabilität bei.</p>
+                        </li>
+                        <li><strong>Regulation des Stoffwechsels</strong>
+                            <p>SIRT1 und andere Sirtuine sind entscheidend für die Regulation von Stoffwechselprozessen wie der Glukoneogenese und der Insulinempfindlichkeit.</p>
+                        </li>
+                        <li><strong>Verzögerung der Zellalterung</strong>
+                            <p>Sirtuine können die zelluläre Seneszenz verzögern, indem sie entzündungsfördernde Signalwege unterdrücken und die Autophagie aktivieren.</p>
+                        </li>
+                    </ol>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px; font-size: 1.2rem; color: #003366;">Strategien zur Aktivierung von Sirtuinen</h4>
+                    <ol style="list-style-type: decimal; padding-left: 25px;">
+                        <li><strong>Kalorienrestriktion und intermittierendes Fasten</strong>
+                            <p>Diese erhöhen die NAD+-Verfügbarkeit und aktivieren Sirtuine auf natürliche Weise.</p>
+                        </li>
+                        <li><strong>Pharmakologische Aktivatoren</strong>
+                            <p>Substanzen wie Resveratrol können die Aktivität von Sirtuinen erhöhen.</p>
+                        </li>
+                        <li><strong>Bewegung</strong>
+                            <p>Regelmäßige körperliche Aktivität steigert die Expression von Sirtuinen, insbesondere SIRT3, in den Muskeln und Mitochondrien.</p>
+                        </li>
+                    </ol>
+
+                    <div class="tip-box">
+                        <div class="tip-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Wussten Sie?</h3>
+                        </div>
+                        <p>
+                            Die ersten Hinweise auf die anti-aging Wirkung von Sirtuinen stammen aus Studien an Hefen, wo gezeigt wurde, dass eine Überexpression des Sir2-Gens (dem Hefe-Äquivalent zu SIRT1 beim Menschen) die Lebensspanne um bis zu 30% verlängern kann.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Chronische Entzündung -->
+                <div id="chronische-entzuendung-description" class="description">
+                    <div class="description-header">
+                        <div class="description-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <h2>Chronische Entzündung</h2>
+                    </div>
+                    <p>
+                        Mit zunehmendem Alter entwickelt sich ein chronischer Entzündungszustand im Körper, auch "Inflammaging" genannt. Diese niedriggradige, systemische Entzündung trägt zu zahlreichen altersbedingten Erkrankungen bei.
+                    </p>
+
+                    <div class="cards-container">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e6ffe6; color: green;">
+                                    <i class="fas fa-utensils"></i>
+                                </div>
+                                <h3>Gesunde Ernährung</h3>
+                            </div>
+                            <p>Die mediterrane Ernährung und andere entzündungshemmende Diäten können chronische Entzündungen reduzieren und die Gesundheit im Alter verbessern.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e5f6ff; color: #0066cc;">
+                                    <i class="fas fa-running"></i>
+                                </div>
+                                <h3>Bewegung</h3>
+                            </div>
+                            <p>Regelmäßige körperliche Aktivität reduziert Entzündungsmarker im Körper und verbessert die Insulinsensitivität.</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background-color: #e5ccff; color: #6600cc;">
+                                    <i class="fas fa-pills"></i>
+                                </div>
+                                <h3>Entzündungshemmende Medikamente</h3>
+                            </div>
+                            <p>NSAR und andere entzündungshemmende Medikamente können in bestimmten Fällen zur Reduktion chronischer Entzündungen eingesetzt werden.</p>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 30px; margin-bottom: 15px; font-size: 1.5rem; color: #003366;">Welche Ernährung hilft gegen Zellalterung?</h3>
+                    <p>
+                        Eine Ernährung, die gegen Zellalterung hilft, fokussiert sich auf den Schutz der Zellen vor oxidativem Stress, der Regulierung von Entzündungsprozessen und der Unterstützung der Zellgesundheit.
+                    </p>
+
+                    <ol style="list-style-type: decimal; padding-left: 25px;">
+                        <li><strong>Antioxidantienreiche Ernährung</strong>
+                            <p>Obst und Gemüse enthalten wichtige Antioxidantien wie Vitamin C, Vitamin E und Polyphenole, die oxidativen Stress bekämpfen und DNA-Schäden reduzieren.</p>
+                            <p>Beispiele: Beeren, Zitrusfrüchte, Brokkoli, Spinat.</p>
+                        </li>
+                        <li><strong>Gesunde Fette</strong>
+                            <p>Omega-3-Fettsäuren unterstützen die Zellmembranen und wirken entzündungshemmend.</p>
+                            <p>Quellen: Fisch (z. B. Lachs, Makrele), Leinsamen, Walnüsse.</p>
+                        </li>
+                        <li><strong>Kurkuma und Curcumin</strong>
+                            <p>Kurkuma enthält Curcumin, das stark entzündungshemmende und antioxidative Eigenschaften besitzt.</p>
+                            <p>In Kombination mit schwarzem Pfeffer (Piperin) wird die Aufnahme deutlich verbessert.</p>
+                        </li>
+                    </ol>
+
+                    <div class="tip-box">
+                        <div class="tip-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Wussten Sie?</h3>
+                        </div>
+                        <p>
+                            "Inflammaging" – ein Kofferwort aus "Inflammation" und "Aging" – beschreibt die chronische, niedriggradige Entzündung, die mit dem Altern einhergeht und als einer der Haupttreiber altersbedingter Krankheiten gilt. Dieser Prozess steht in engem Zusammenhang mit der Ansammlung seneszenter Zellen, die entzündungsfördernde Moleküle freisetzen.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 7-Tage Ernährungsplan für jüngere Darmflora -->
+                <div id="ernaehrungsplan-description" class="description">
+                    <div class="description-header">
+                        <div class="description-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <h2>7-Tage Ernährungsplan für jüngere Darmflora</h2>
+                    </div>
+                    <p>
+                        Ein darmfreundlicher Ernährungsplan fördert das Wachstum gesunder Darmbakterien, reduziert Entzündungen und verbessert die allgemeine Gesundheit. Eine gesunde Darmflora wird mit einer verlangsamten Alterung in Verbindung gebracht.
+                    </p>
+
+                    <!-- Tag 1 -->
+                    <div class="day-card">
+                        <div class="day-header">Tag 1 — Ballaststoffe & Probiotika</div>
+                        <div class="day-content">
+                            <ul class="meal-list">
+                                <li><strong>Frühstück:</strong> Naturjoghurt mit Leinsamen, Haferflocken und Heidelbeeren</li>
+                                <li><strong>Getränk:</strong> Grüner Tee</li>
+                                <li><strong>Mittagessen:</strong> Vollkornreis mit gegrilltem Lachs und Brokkoli</li>
+                                <li><strong>Beilage:</strong> Fermentiertes Gemüse (z.B. Sauerkraut)</li>
+                                <li><strong>Abendessen:</strong> Gemüsesuppe mit Linsen, Karotten und Sellerie</li>
+                                <li><strong>Beilage:</strong> Vollkornbrot</li>
+                                <li><strong>Snack:</strong> Handvoll Mandeln</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Tag 2 -->
+                    <div class="day-card">
+                        <div class="day-header">Tag 2 — Präbiotika & Omega-3-Fette</div>
+                        <div class="day-content">
+                            <ul class="meal-list">
+                                <li><strong>Frühstück:</strong> Haferbrei mit Banane, Chiasamen und Walnüssen</li>
+                                <li><strong>Getränk:</strong> Kräutertee</li>
+                                <li><strong>Mittagessen:</strong> Salat mit Spinat, Kichererbsen, Gurke und Olivenöl</li>
+                                <li><strong>Protein:</strong> Gegrillte Hähnchenbrust</li>
+                                <li><strong>Abendessen:</strong> Gebackene Süßkartoffel mit Quark und Schnittlauch</li>
+                                <li><strong>Snack:</strong> Apfel mit Erdnussbutter</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Tag 3 -->
+                    <div class="day-card">
+                        <div class="day-header">Tag 3 — Antioxidantien & Fermentierte Lebensmittel</div>
+                        <div class="day-content">
+                            <ul class="meal-list">
+                                <li><strong>Frühstück:</strong> Kefir-Smoothie mit Spinat, Beeren und Chiasamen</li>
+                                <li><strong>Mittagessen:</strong> Vollkornnudeln mit Tomatensauce, Pilzen und Spinat</li>
+                                <li><strong>Beilage:</strong> Beilagensalat</li>
+                                <li><strong>Abendessen:</strong> Ofengemüse (Karotten, Zucchini, Paprika) mit Hummus</li>
+                                <li><strong>Snack:</strong> Eine kleine Portion Sauerkraut</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Tag 4 -->
+                    <div class="day-card">
+                        <div class="day-header">Tag 4 — Darmberuhigende Nahrungsmittel</div>
+                        <div class="day-content">
+                            <ul class="meal-list">
+                                <li><strong>Frühstück:</strong> Overnight Oats mit Apfel, Zimt und Leinsamen</li>
+                                <li><strong>Mittagessen:</strong> Hähnchen-Gemüse-Pfanne mit Naturreis</li>
+                                <li><strong>Beilage:</strong> Fermentierter Rettich</li>
+                                <li><strong>Abendessen:</strong> Fischfilet mit gedünstetem Gemüse und Kartoffeln</li>
+                                <li><strong>Snack:</strong> Handvoll Walnüsse</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Tag 5 -->
+                    <div class="day-card">
+                        <div class="day-header">Tag 5 — Intermittierendes Fasten (16:8-Methode optional)</div>
+                        <div class="day-content">
+                            <ul class="meal-list">
+                                <li><strong>Frühstück (nach dem Fastenfenster):</strong> Griechischer Joghurt mit Chiasamen und Himbeeren</li>
+                                <li><strong>Mittagessen:</strong> Gemischter Salat mit Hülsenfrüchten, Kürbiskernen und Olivenöl</li>
+                                <li><strong>Abendessen:</strong> Linsensuppe mit Vollkornbrot</li>
+                                <li><strong>Snack:</strong> Karottensticks mit Hummus</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Tag 6 -->
+                    <div class="day-card">
+                        <div class="day-header">Tag 6 — Pflanzliche Vielfalt</div>
+                        <div class="day-content">
+                            <ul class="meal-list">
+                                <li><strong>Frühstück:</strong> Smoothie mit Spinat, Mango, Hafermilch und Ingwer</li>
+                                <li><strong>Mittagessen:</strong> Quinoa-Salat mit Roter Bete, Feta und Walnüssen</li>
+                                <li><strong>Abendessen:</strong> Gemüsecurry mit Kichererbsen und Kokosmilch</li>
+                                <li><strong>Snack:</strong> Eine Handvoll Beeren</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Tag 7 -->
+                    <div class="day-card">
+                        <div class="day-header">Tag 7 — Detox & Entspannung</div>
+                        <div class="day-content">
+                            <ul class="meal-list">
+                                <li><strong>Frühstück:</strong> Leinsamen-Bananen-Smoothie mit Hafermilch</li>
+                                <li><strong>Mittagessen:</strong> Zucchininudeln mit Avocadocreme und Tomaten</li>
+                                <li><strong>Abendessen:</strong> Gedünstetes Gemüse mit Wildlachs</li>
+                                <li><strong>Snack:</strong> Joghurt mit Leinsamen</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 30px; margin-bottom: 15px; font-size: 1.5rem; color: #003366;">Zusätzliche Empfehlungen</h3>
+                    <ul>
+                        <li>Trinke täglich mindestens 2 Liter Wasser.</li>
+                        <li>Integriere Kräutertees wie Fenchel, Ingwer oder Kamille.</li>
+                        <li>Vermeide Zucker, Alkohol und stark verarbeitete Lebensmittel.</li>
+                        <li>Nimm regelmäßig fermentierte Lebensmittel zu dir (z.B. Sauerkraut, Kimchi, Kefir).</li>
+                    </ul>
+
+                    <h3 style="margin-top: 15px; margin-bottom: 10px; font-size: 1.3rem; color: #003366;">Bewegung und Stressmanagement ergänzen</h3>
+                    <ul>
+                        <li>Täglich mindestens 30 Minuten Bewegung (Spaziergang, Yoga, Fahrradfahren).</li>
+                        <li>Meditation oder Atemübungen zur Stressreduktion.</li>
+                        <li>Ausreichend Schlaf (7-8 Stunden) zur Unterstützung der Darmgesundheit.</li>
+                        <li>Regelmäßige Essenszeiten für einen stabilen Verdauungsrhythmus.</li>
+                    </ul>
+
+                    <div class="tip-box">
+                        <div class="tip-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Wussten Sie?</h3>
+                        </div>
+                        <p>
+                            Die Darmflora eines typischen 20-Jährigen unterscheidet sich deutlich von der eines 70-Jährigen. Mit dem Alter nimmt die Vielfalt der Darmbakterien ab, was zu einem weniger resilienten Mikrobiom führt. Durch eine gezielte Ernährung kann die Darmflora jedoch "verjüngt" werden, was positive Auswirkungen auf die allgemeine Gesundheit und möglicherweise auch auf die Langlebigkeit hat.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Intervallfasten -->
+                <div id="intervallfasten-description" class="description">
+                    <div class="description-header">
+                        <div class="description-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h2>16:8 Intervallfasten Plan</h2>
+                    </div>
+                    <p>
+                        Mit diesem 7-Tage Essensplan wird dein 16:8 Intervallfasten Vorhaben zum Erfolg. Genieße deine Mahlzeiten zwischen 12:00 und 20:00 Uhr und faste in den restlichen 16 Stunden.
+                    </p>
+
+                    <div class="progress-bar-container">
+                        <div class="progress-text">16 Stunden Fasten | 8 Stunden Essen</div>
+                        <div class="progress-fill"></div>
+                    </div>
+
+                    <div class="legend">
+                        <div class="legend-item fasting-bg">
+                            <div class="legend-icon" style="background-color: #cceeff;">
+                                <i class="fas fa-moon" style="color: #0066cc;"></i>
+                            </div>
+                            <span>08:00 (Fasten)</span>
+                        </div>
+                        <div class="legend-item lunch-bg">
+                            <div class="legend-icon" style="background-color: #ffeeaa;">
+                                <i class="fas fa-utensils" style="color: #cc9900;"></i>
+                            </div>
+                            <span>12:00 (Mittag)</span>
+                        </div>
+                        <div class="legend-item snack-bg">
+                            <div class="legend-icon" style="background-color: #ccffcc;">
+                                <i class="fas fa-apple-alt" style="color: #009900;"></i>
+                            </div>
+                            <span>15:00 (Snack)</span>
+                        </div>
+                        <div class="legend-item dinner-bg">
+                            <div class="legend-icon" style="background-color: #ddbbff;">
+                                <i class="fas fa-drumstick-bite" style="color: #6600cc;"></i>
+                            </div>
+                            <span>19:30 (Abend)</span>
+                        </div>
+                        <div class="legend-item fasting-bg">
+                            <div class="legend-icon" style="background-color: #cceeff;">
+                                <i class="fas fa-moon" style="color: #0066cc;"></i>
+                            </div>
+                            <span>20:00 (Fasten)</span>
+                        </div>
+                    </div>
+
+                    <!-- Montag -->
+                    <div class="meal-card">
+                        <div class="meal-day" style="background-color: rgba(93, 92, 222, 0.1);">
+                            <span>Montag</span>
+                            <span class="today-badge">Heute</span>
+                        </div>
+                        <div class="meal-grid">
+                            <!-- 08:00 -->
+                            <div class="meal-item meal-fasting">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #cceeff;">
+                                        <i class="fas fa-moon" style="color: #0066cc;"></i>
+                                    </div>
+                                    <span class="meal-label">08:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Wasser, ungesüßter Tee oder schwarzer Kaffee</p>
+                            </div>
+                            
+                            <!-- 12:00 -->
+                            <div class="meal-item meal-lunch">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ffeeaa;">
+                                        <i class="fas fa-utensils" style="color: #cc9900;"></i>
+                                    </div>
+                                    <span class="meal-label">12:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Rührei mit Gemüse (Paprika, Spinat, Tomaten), Avocado und Vollkornbrot</p>
+                            </div>
+                            
+                            <!-- 15:00 -->
+                            <div class="meal-item meal-snack">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ccffcc;">
+                                        <i class="fas fa-apple-alt" style="color: #009900;"></i>
+                                    </div>
+                                    <span class="meal-label">15:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Handvoll Nüsse & Beeren</p>
+                            </div>
+                            
+                            <!-- 19:30 -->
+                            <div class="meal-item meal-dinner">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ddbbff;">
+                                        <i class="fas fa-drumstick-bite" style="color: #6600cc;"></i>
+                                    </div>
+                                    <span class="meal-label">19:30 Uhr</span>
+                                </div>
+                                <p class="meal-description">Gebratener Lachs mit Quinoa und Brokkoli</p>
+                            </div>
+                            
+                            <!-- 20:00 -->
+                            <div class="meal-item meal-fasting">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #cceeff;">
+                                        <i class="fas fa-moon" style="color: #0066cc;"></i>
+                                    </div>
+                                    <span class="meal-label">20:00 Uhr</span>
+                                </div>
+                                <p class="meal-description" style="color: #0066cc; font-weight: bold;">Fasten beginnt</p>
+                                <p class="meal-description" style="font-size: 0.8rem;">Nur noch Wasser oder Tee</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dienstag -->
+                    <div class="meal-card">
+                        <div class="meal-day" style="background-color: #f0f0f0;">
+                            <span>Dienstag</span>
+                        </div>
+                        <div class="meal-grid">
+                            <div class="meal-item meal-fasting">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #cceeff;">
+                                        <i class="fas fa-moon" style="color: #0066cc;"></i>
+                                    </div>
+                                    <span class="meal-label">08:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Grüner Tee oder Zitronenwasser</p>
+                            </div>
+                            
+                            <div class="meal-item meal-lunch">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ffeeaa;">
+                                        <i class="fas fa-utensils" style="color: #cc9900;"></i>
+                                    </div>
+                                    <span class="meal-label">12:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Hähnchensalat mit Olivenöl-Dressing, Walnüssen und Kichererbsen</p>
+                            </div>
+                            
+                            <div class="meal-item meal-snack">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ccffcc;">
+                                        <i class="fas fa-apple-alt" style="color: #009900;"></i>
+                                    </div>
+                                    <span class="meal-label">15:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Ein Apfel mit Mandelmus</p>
+                            </div>
+                            
+                            <div class="meal-item meal-dinner">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ddbbff;">
+                                        <i class="fas fa-drumstick-bite" style="color: #6600cc;"></i>
+                                    </div>
+                                    <span class="meal-label">19:30 Uhr</span>
+                                </div>
+                                <p class="meal-description">Gebratener Tofu mit gedünstetem Gemüse und Wildreis</p>
+                            </div>
+                            
+                            <div class="meal-item meal-fasting">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #cceeff;">
+                                        <i class="fas fa-moon" style="color: #0066cc;"></i>
+                                    </div>
+                                    <span class="meal-label">20:00 Uhr</span>
+                                </div>
+                                <p class="meal-description" style="color: #0066cc; font-weight: bold;">Fasten beginnt</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mittwoch -->
+                    <div class="meal-card">
+                        <div class="meal-day" style="background-color: #f0f0f0;">
+                            <span>Mittwoch</span>
+                        </div>
+                        <div class="meal-grid">
+                            <div class="meal-item meal-fasting">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #cceeff;">
+                                        <i class="fas fa-moon" style="color: #0066cc;"></i>
+                                    </div>
+                                    <span class="meal-label">08:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Kaffee oder Tee</p>
+                            </div>
+                            
+                            <div class="meal-item meal-lunch">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ffeeaa;">
+                                        <i class="fas fa-utensils" style="color: #cc9900;"></i>
+                                    </div>
+                                    <span class="meal-label">12:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Proteinreiche Pfannkuchen aus Haferflocken, Banane und Ei mit Joghurt</p>
+                            </div>
+                            
+                            <div class="meal-item meal-snack">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ccffcc;">
+                                        <i class="fas fa-apple-alt" style="color: #009900;"></i>
+                                    </div>
+                                    <span class="meal-label">15:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Hüttenkäse mit Beeren</p>
+                            </div>
+                            
+                            <div class="meal-item meal-dinner">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ddbbff;">
+                                        <i class="fas fa-drumstick-bite" style="color: #6600cc;"></i>
+                                    </div>
+                                    <span class="meal-label">19:30 Uhr</span>
+                                </div>
+                                <p class="meal-description">Rinderfilet mit Süßkartoffelpüree und grünen Bohnen</p>
+                            </div>
+                            
+                            <div class="meal-item meal-fasting">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #cceeff;">
+                                        <i class="fas fa-moon" style="color: #0066cc;"></i>
+                                    </div>
+                                    <span class="meal-label">20:00 Uhr</span>
+                                </div>
+                                <p class="meal-description" style="color: #0066cc; font-weight: bold;">Fasten beginnt</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Donnerstag -->
+                    <div class="meal-card">
+                        <div class="meal-day" style="background-color: #f0f0f0;">
+                            <span>Donnerstag</span>
+                        </div>
+                        <div class="meal-grid">
+                            <div class="meal-item meal-fasting">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #cceeff;">
+                                        <i class="fas fa-moon" style="color: #0066cc;"></i>
+                                    </div>
+                                    <span class="meal-label">08:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Zitronenwasser oder Matcha-Tee</p>
+                            </div>
+                            
+                            <div class="meal-item meal-lunch">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ffeeaa;">
+                                        <i class="fas fa-utensils" style="color: #cc9900;"></i>
+                                    </div>
+                                    <span class="meal-label">12:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Ofengemüse (Zucchini, Karotten, Paprika) mit Feta und Hummus</p>
+                            </div>
+                            
+                            <div class="meal-item meal-snack">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ccffcc;">
+                                        <i class="fas fa-apple-alt" style="color: #009900;"></i>
+                                    </div>
+                                    <span class="meal-label">15:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Handvoll Mandeln & eine Dattel</p>
+                            </div>
+                            
+                            <div class="meal-item meal-dinner">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ddbbff;">
+                                        <i class="fas fa-drumstick-bite" style="color: #6600cc;"></i>
+                                    </div>
+                                    <span class="meal-label">19:30 Uhr</span>
+                                </div>
+                                <p class="meal-description">Lachs mit Spinat und Avocado</p>
+                            </div>
+                            
+                            <div class="meal-item meal-fasting">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #cceeff;">
+                                        <i class="fas fa-moon" style="color: #0066cc;"></i>
+                                    </div>
+                                    <span class="meal-label">20:00 Uhr</span>
+                                </div>
+                                <p class="meal-description" style="color: #0066cc; font-weight: bold;">Fasten beginnt</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Freitag -->
+                    <div class="meal-card">
+                        <div class="meal-day" style="background-color: #f0f0f0;">
+                            <span>Freitag</span>
+                        </div>
+                        <div class="meal-grid">
+                            <div class="meal-item meal-fasting">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #cceeff;">
+                                        <i class="fas fa-moon" style="color: #0066cc;"></i>
+                                    </div>
+                                    <span class="meal-label">08:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Schwarzer Kaffee oder Tee</p>
+                            </div>
+                            
+                            <div class="meal-item meal-lunch">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ffeeaa;">
+                                        <i class="fas fa-utensils" style="color: #cc9900;"></i>
+                                    </div>
+                                    <span class="meal-label">12:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Omelett mit Pilzen, Tomaten und Käse</p>
+                            </div>
+                            
+                            <div class="meal-item meal-snack">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ccffcc;">
+                                        <i class="fas fa-apple-alt" style="color: #009900;"></i>
+                                    </div>
+                                    <span class="meal-label">15:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Handvoll Walnüsse & Joghurt</p>
+                            </div>
+                            
+                            <div class="meal-item meal-dinner">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ddbbff;">
+                                        <i class="fas fa-drumstick-bite" style="color: #6600cc;"></i>
+                                    </div>
+                                    <span class="meal-label">19:30 Uhr</span>
+                                </div>
+                                <p class="meal-description">Gebratene Garnelen mit Quinoa-Salat</p>
+                            </div>
+                            
+                            <div class="meal-item meal-fasting">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #cceeff;">
+                                        <i class="fas fa-moon" style="color: #0066cc;"></i>
+                                    </div>
+                                    <span class="meal-label">20:00 Uhr</span>
+                                </div>
+                                <p class="meal-description" style="color: #0066cc; font-weight: bold;">Fasten beginnt</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Samstag -->
+                    <div class="meal-card">
+                        <div class="meal-day" style="background-color: #f0f0f0;">
+                            <span>Samstag</span>
+                        </div>
+                        <div class="meal-grid">
+                            <div class="meal-item meal-fasting">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #cceeff;">
+                                        <i class="fas fa-moon" style="color: #0066cc;"></i>
+                                    </div>
+                                    <span class="meal-label">08:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Wasser oder grüner Tee</p>
+                            </div>
+                            
+                            <div class="meal-item meal-lunch">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ffeeaa;">
+                                        <i class="fas fa-utensils" style="color: #cc9900;"></i>
+                                    </div>
+                                    <span class="meal-label">12:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Vollkornwrap mit Hähnchen, Avocado und Gemüse</p>
+                            </div>
+                            
+                            <div class="meal-item meal-snack">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ccffcc;">
+                                        <i class="fas fa-apple-alt" style="color: #009900;"></i>
+                                    </div>
+                                    <span class="meal-label">15:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Eine Handvoll Nüsse mit dunkler Schokolade (85%)</p>
+                            </div>
+                            
+                            <div class="meal-item meal-dinner">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ddbbff;">
+                                        <i class="fas fa-drumstick-bite" style="color: #6600cc;"></i>
+                                    </div>
+                                    <span class="meal-label">19:30 Uhr</span>
+                                </div>
+                                <p class="meal-description">Thunfischsteak mit gedünstetem Spargel</p>
+                            </div>
+                            
+                            <div class="meal-item meal-fasting">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #cceeff;">
+                                        <i class="fas fa-moon" style="color: #0066cc;"></i>
+                                    </div>
+                                    <span class="meal-label">20:00 Uhr</span>
+                                </div>
+                                <p class="meal-description" style="color: #0066cc; font-weight: bold;">Fasten beginnt</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sonntag -->
+                    <div class="meal-card">
+                        <div class="meal-day" style="background-color: #f0f0f0;">
+                            <span>Sonntag</span>
+                        </div>
+                        <div class="meal-grid">
+                            <div class="meal-item meal-fasting">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #cceeff;">
+                                        <i class="fas fa-moon" style="color: #0066cc;"></i>
+                                    </div>
+                                    <span class="meal-label">08:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Zitronenwasser oder Matcha</p>
+                            </div>
+                            
+                            <div class="meal-item meal-lunch">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ffeeaa;">
+                                        <i class="fas fa-utensils" style="color: #cc9900;"></i>
+                                    </div>
+                                    <span class="meal-label">12:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Chia-Pudding mit Kokosmilch und Beeren</p>
+                            </div>
+                            
+                            <div class="meal-item meal-snack">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ccffcc;">
+                                        <i class="fas fa-apple-alt" style="color: #009900;"></i>
+                                    </div>
+                                    <span class="meal-label">15:00 Uhr</span>
+                                </div>
+                                <p class="meal-description">Ein Apfel mit Erdnussbutter</p>
+                            </div>
+                            
+                            <div class="meal-item meal-dinner">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #ddbbff;">
+                                        <i class="fas fa-drumstick-bite" style="color: #6600cc;"></i>
+                                    </div>
+                                    <span class="meal-label">19:30 Uhr</span>
+                                </div>
+                                <p class="meal-description">Gegrillte Putenbrust mit Ofengemüse</p>
+                            </div>
+                            
+                            <div class="meal-item meal-fasting">
+                                <div class="meal-time">
+                                    <div class="meal-icon" style="background-color: #cceeff;">
+                                        <i class="fas fa-moon" style="color: #0066cc;"></i>
+                                    </div>
+                                    <span class="meal-label">20:00 Uhr</span>
+                                </div>
+                                <p class="meal-description" style="color: #0066cc; font-weight: bold;">Fasten beginnt</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 style="font-size: 1.5rem; margin: 30px 0 15px; color: #003366;">Hilfreiche Tipps für dein Intervallfasten</h3>
+                    
+                    <div class="tips-grid">
+                        <div class="tip-card hydration-card">
+                            <div class="tip-card-header">
+                                <div class="tip-card-icon">
+                                    <i class="fas fa-tint" style="color: #0066cc;"></i>
+                                </div>
+                                <h3>Hydration</h3>
+                            </div>
+                            <p>Viel Wasser trinken! Ziel: 2-3 Liter täglich. Auch ungesüßter Tee ist erlaubt.</p>
+                        </div>
+
+                        <div class="tip-card sport-card">
+                            <div class="tip-card-header">
+                                <div class="tip-card-icon">
+                                    <i class="fas fa-dumbbell" style="color: #009900;"></i>
+                                </div>
+                                <h3>Sport & Training</h3>
+                            </div>
+                            <p>Falls du Sport machst, kann eine proteinreiche Mahlzeit nach dem Training sinnvoll sein.</p>
+                        </div>
+
+                        <div class="tip-card nutrition-card">
+                            <div class="tip-card-header">
+                                <div class="tip-card-icon">
+                                    <i class="fas fa-seedling" style="color: #cc9900;"></i>
+                                </div>
+                                <h3>Gesunde Fette</h3>
+                            </div>
+                            <p>Achte auf gute Fette (Avocado, Olivenöl, Nüsse) für langanhaltende Energie.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-box" style="background-color: #f8f8f8; border-left-color: #5D5CDE;">
+                        <div class="tip-header" style="color: #5D5CDE;">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Wussten Sie?</h3>
+                        </div>
+                        <p>
+                            Intervallfasten kann die Autophagie fördern – einen zellulären Reinigungsprozess, bei dem beschädigte Zellkomponenten abgebaut und recycelt werden. Dieser Prozess spielt eine wichtige Rolle bei der Verjüngung von Zellen und kann den Alterungsprozess verlangsamen.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h2>Plattform für Alterungsprozesse</h2>
+                    <p>Wissenschaftlich fundierte Informationen zu Alterungsprozessen und Gegenmaßnahmen</p>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Plattform für Alterungsprozesse. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const icon = darkModeToggle.querySelector('i');
+        
+        function setDarkMode(isDark) {
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('darkMode', 'enabled');
+                icon.className = 'fas fa-sun';
+                darkModeToggle.textContent = ' Light Mode';
+                darkModeToggle.prepend(icon);
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('darkMode', 'disabled');
+                icon.className = 'fas fa-moon';
+                darkModeToggle.textContent = ' Dark Mode';
+                darkModeToggle.prepend(icon);
+            }
+        }
+        
+        // Check for saved dark mode preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            setDarkMode(true);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            setDarkMode(true);
+        }
+        
+        // Dark mode toggle event
+        darkModeToggle.addEventListener('click', () => {
+            if (document.body.classList.contains('dark-mode')) {
+                setDarkMode(false);
+            } else {
+                setDarkMode(true);
+            }
+        });
+        
+        // Description toggling
+        function showDescription(category) {
+            // Hide all descriptions
+            document.querySelectorAll('.description').forEach(desc => {
+                desc.classList.remove('active');
+            });
+            
+            // Show selected description
+            const selectedDesc = document.getElementById(`${category}-description`);
+            if (selectedDesc) {
+                selectedDesc.classList.add('active');
+            }
+            
+            // Remove active class from all menu items
+            document.querySelectorAll('.menu-button').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to selected menu item
+            document.querySelectorAll('.menu-button').forEach(item => {
+                if (item.getAttribute('onclick').includes(`'${category}'`)) {
+                    item.classList.add('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
