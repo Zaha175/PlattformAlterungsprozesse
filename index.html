@@ -1689,6 +1689,11 @@
                                     <span class="meal-label">08:00 Uhr</span>
                                 </div>
                                 <p class="meal-description">Wasser, ungesüßter Tee oder schwarzer Kaffee</p>
+                             <!-- Button zum Anzeigen des Iframes -->
+                             <button onclick="toggleIframe()" class="button" style="margin: 10px 0;">🗓️ Zeige Tagesplan (Montag)</button>
+
+                             <!-- Iframe (standardmäßig versteckt) -->
+                            <iframe id="montagIframe" src="https://zaha175.github.io/MONTAG/" style="display:none; width:100%; height:500px; border:none; border-radius:8px; box-shadow: 0 0 10px rgba(0,0,0,0.2); margin-top:10px;"></iframe>
                             </div>
                             
                             <!-- 12:00 -->
@@ -2191,7 +2196,14 @@
                 setDarkMode(true);
             }
         });
-        
+        function toggleIframe() {
+       const iframe = document.getElementById('montagIframe');
+         if (iframe.style.display === 'none') {
+      iframe.style.display = 'block';
+       } else {
+      iframe.style.display = 'none';
+    }
+  }
         // Description toggling
         function showDescription(category) {
             // Hide all descriptions
